@@ -79,7 +79,6 @@
             "Why there are terorists in every place I go >:( ",
             "I just want to get my bread and i have to face one of those vicious killers again, what a sad world..",
             "They annonced to me that a member of my family died, fucking bastards !!!",
-            "We must build a wall between us and africa !!!",
             "I'm going back to Alaska where i'll be safe from Al Qaida."
         ];
 
@@ -158,7 +157,7 @@
             latestPopup = popup;
 
             // After 10 popups, center the view to show the whole United States
-            if (popupCount >= 10) {
+            if (popupCount >= 100) {
                 map.setView([37.0902, -95.7129], 4, { animate: true, duration: 2 }); // Center the map on the United States
                 map.dragging.disable(); // Disable dragging
                 map.scrollWheelZoom.disable(); // Disable zooming
