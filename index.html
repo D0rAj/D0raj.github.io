@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Map Points</title>
+    <title>Map Jarod Amine</title>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
     <style>
@@ -24,7 +24,7 @@
         .highlighted-popup {
             background-color: rgba(255, 255, 255, 0.9); /* Lighter background */
             color: #000;
-            border: 2px solid #444;
+            border: 1px solid #444;
         }
 
         #title {
@@ -40,15 +40,30 @@
             border-radius: 5px;
             z-index: 1000;
         }
+
+        #subtitle {
+            position: absolute;
+            top: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+            font-weight: normal;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
-    <div id="title">Explore the World</div>
+    <div id="title">Map of compliments to Muslims</div>
+    <div id="subtitle">Real-time map of insults sent on internet towards muslims</div>
     <div id="map"></div>
 
     <script>
-        // Initialize map with global view
-        const map = L.map('map').setView([20, 0], 2); // Centered on the world
+        // Initialize map with a default view on the United States
+        const map = L.map('map').setView([37.0902, -95.7129], 4); // Centered on the United States
 
         // Add OpenStreetMap tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -58,66 +73,51 @@
 
         // List of random phrases
         const phrases = [
-            "La vie est belle!",
-            "Un point mystérieux apparaît...",
-            "Rêver, c'est voyager.",
-            "Paris, ville des lumières.",
-            "Un petit pas pour l'homme...",
-            "Une surprise vous attend ici.",
-            "Explorer, c'est vivre.",
-            "La Seine murmure ses secrets.",
-            "Un coin de paradis.",
-            "La magie est dans l'air.",
-            "Un voyage de rêve.",
-            "Les montagnes vous attendent.",
-            "L'aventure vous appelle.",
-            "Le calme règne ici."
+            "Please get them out of my country",
+            "My neighbor is a bomber, I know it, they're all the same.",
+            "I'm scared to send my children to school because of those arabics coming !",
+            "Why there are terorists in every place I go >:( ",
+            "This place holds many secrets.",
+            "The stars shine bright here.",
+            "Nature's beauty at its best.",
+            "A dream destination.",
+            "Find your peace here.",
+            "Wanderlust calls you."
         ];
 
-        // List of random locations with coordinates (locations from all over the world)
+        // List of locations within the United States (cities and landmarks)
         const locations = [
-            { city: "Paris", coordinates: [48.8566, 2.3522] },
             { city: "New York", coordinates: [40.7128, -74.0060] },
-            { city: "London", coordinates: [51.5074, -0.1278] },
-            { city: "Zurich", coordinates: [47.3769, 8.5417] },
-            { city: "Kyoto", coordinates: [35.0116, 135.7681] },
-            { city: "Maldives", coordinates: [3.2028, 73.2207] },
             { city: "Los Angeles", coordinates: [34.0522, -118.2437] },
-            { city: "Mexico City", coordinates: [19.4326, -99.1332] },
-            { city: "Toronto", coordinates: [43.651070, -79.347015] },
-            { city: "Vancouver", coordinates: [49.2827, -123.1207] },
-            { city: "Alaska", coordinates: [64.2008, -149.4937] },
-            { city: "Montreal", coordinates: [45.5017, -73.5673] },
-            { city: "Banff", coordinates: [51.1784, -115.5708] },
-
-            // Russia
-            { city: "Moscow", coordinates: [55.7558, 37.6173] },
-            { city: "Saint Petersburg", coordinates: [59.9343, 30.3351] },
-            { city: "Vladivostok", coordinates: [43.1195, 131.8869] },
-            { city: "Yakutsk", coordinates: [62.0355, 129.6757] },
-            { city: "Siberia", coordinates: [60.0000, 100.0000] },
-
-            // Africa
-            { city: "Cairo", coordinates: [30.0444, 31.2357] },
-            { city: "Lagos", coordinates: [6.5244, 3.3792] },
-            { city: "Cape Town", coordinates: [-33.9249, 18.4241] },
-            { city: "Johannesburg", coordinates: [-26.2041, 28.0473] },
-            { city: "Nairobi", coordinates: [-1.2867, 36.8219] },
-            { city: "Addis Ababa", coordinates: [9.145, 40.4897] },
-            { city: "Marrakech", coordinates: [31.6349, -7.9995] },
-            { city: "Tunis", coordinates: [36.8065, 10.1815] },
-            { city: "Zanzibar", coordinates: [-6.1659, 39.2026] },
-            { city: "Dakar", coordinates: [14.6928, -17.4467] },
-
-            // Canada / Alaska
-            { city: "Whitehorse", coordinates: [60.7212, -135.0568] },
-            { city: "Edmonton", coordinates: [53.5461, -113.4938] },
-            { city: "Yellowknife", coordinates: [62.4540, -114.3718] },
-            { city: "Iqaluit", coordinates: [63.7467, -68.5167] },
-            { city: "Anchorage", coordinates: [61.2181, -149.9003] },
-            { city: "Fairbanks", coordinates: [64.8378, -147.7164] },
-            { city: "Vancouver", coordinates: [49.2827, -123.1207] },
-            { city: "Ottawa", coordinates: [45.4215, -75.6972] }
+            { city: "Chicago", coordinates: [41.8781, -87.6298] },
+            { city: "Houston", coordinates: [29.7604, -95.3698] },
+            { city: "Miami", coordinates: [25.7617, -80.1918] },
+            { city: "San Francisco", coordinates: [37.7749, -122.4194] },
+            { city: "Boston", coordinates: [42.3601, -71.0589] },
+            { city: "Seattle", coordinates: [47.6062, -122.3321] },
+            { city: "Washington, D.C.", coordinates: [38.9072, -77.0369] },
+            { city: "Denver", coordinates: [39.7392, -104.9903] },
+            { city: "Las Vegas", coordinates: [36.1699, -115.1398] },
+            { city: "Phoenix", coordinates: [33.4484, -112.0740] },
+            { city: "Atlanta", coordinates: [33.7490, -84.3880] },
+            { city: "Dallas", coordinates: [32.7767, -96.7970] },
+            { city: "Austin", coordinates: [30.2672, -97.7431] },
+            { city: "Orlando", coordinates: [28.5383, -81.3792] },
+            { city: "Portland", coordinates: [45.5152, -122.6784] },
+            { city: "Philadelphia", coordinates: [39.9526, -75.1652] },
+            { city: "Detroit", coordinates: [42.3314, -83.0458] },
+            { city: "Minneapolis", coordinates: [44.9778, -93.2650] },
+            { city: "Salt Lake City", coordinates: [40.7608, -111.8910] },
+            { city: "Indianapolis", coordinates: [39.7684, -86.1580] },
+            { city: "Charlotte", coordinates: [35.2271, -80.8431] },
+            { city: "Nashville", coordinates: [36.1627, -86.7816] },
+            { city: "Kansas City", coordinates: [39.0997, -94.5786] },
+            { city: "St. Louis", coordinates: [38.6270, -90.1994] },
+            { city: "Tampa", coordinates: [27.9506, -82.4572] },
+            { city: "Cleveland", coordinates: [41.4993, -81.6944] },
+            { city: "Louisville", coordinates: [38.2527, -85.7585] },
+            { city: "Buffalo", coordinates: [42.8864, -78.8784] },
+            { city: "Baltimore", coordinates: [39.2904, -76.6122] }
         ];
 
         // Track displayed cities to avoid duplicates
@@ -137,7 +137,7 @@
             let popupClass = '';
 
             // Add a custom popup showing the phrase and city
-            const popupContent = `${randomPhrase}<br><strong>${randomLocation.city}</strong>`;
+            const popupContent = `\"${randomPhrase}\"<br><strong>${randomLocation.city}</strong>`;
             const popup = L.popup({ closeButton: false, autoClose: false, zIndex: 1000 })
                 .setLatLng(randomLocation.coordinates)
                 .setContent(`<div class="custom-popup ${popupClass}">${popupContent}</div>`)
@@ -159,9 +159,9 @@
             // Store the latest popup
             latestPopup = popup;
 
-            // After 10 popups, center the view to show the whole world
+            // After 10 popups, center the view to show the whole United States
             if (popupCount >= 10) {
-                map.setView([20, 0], 2, { animate: true, duration: 2 }); // Center the map at world level
+                map.setView([37.0902, -95.7129], 4, { animate: true, duration: 2 }); // Center the map on the United States
                 map.dragging.disable(); // Disable dragging
                 map.scrollWheelZoom.disable(); // Disable zooming
 
@@ -169,7 +169,7 @@
                 // clearInterval(addPopupInterval); // If you want to stop adding points after 10 popups
             } else {
                 // Otherwise, continue with normal centering
-                map.setView(randomLocation.coordinates, 3, { animate: true, duration: 2 });
+                map.setView(randomLocation.coordinates, 5, { animate: true, duration: 2 });
             }
         }
 
