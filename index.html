@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Map Points</title>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 100vh;
+            width: 100%;
+        }
+
+        .custom-popup {
+            background: white;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            font-size: 14px;
+        }
+
+        /* Highlighted popup for the last one */
+        .highlighted-popup {
+            background-color: rgba(255, 255, 255, 0.9); /* Lighter background */
+            color: #000;
+            border: 2px solid #444;
+        }
+
+        #title {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 36px;
+            font-weight: bold;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 5px;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div id="title">Explore the World</div>
+    <div id="map"></div>
+
+    <script>
+        // Initialize map with global view
+        const map = L.map('map').setView([20, 0], 2); // Centered on the world
+
+        // Add OpenStreetMap tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // List of random phrases
+        const phrases = [
+            "La vie est belle!",
+            "Un point mystérieux apparaît...",
+            "Rêver, c'est voyager.",
+            "Paris, ville des lumières.",
+            "Un petit pas pour l'homme...",
+            "Une surprise vous attend ici.",
+            "Explorer, c'est vivre.",
+            "La Seine murmure ses secrets.",
+            "Un coin de paradis.",
+            "La magie est dans l'air.",
+            "Un voyage de rêve.",
+            "Les montagnes vous attendent.",
+            "L'aventure vous appelle.",
+            "Le calme règne ici."
+        ];
+
+        // List of random locations with coordinates (locations from all over the world)
+        const locations = [
+            { city: "Paris", coordinates: [48.8566, 2.3522] },
+            { city: "New York", coordinates: [40.7128, -74.0060] },
+            { city: "London", coordinates: [51.5074, -0.1278] },
+            { city: "Zurich", coordinates: [47.3769, 8.5417] },
+            { city: "Kyoto", coordinates: [35.0116, 135.7681] },
+            { city: "Maldives", coordinates: [3.2028, 73.2207] },
+            { city: "Los Angeles", coordinates: [34.0522, -118.2437] },
+            { city: "Mexico City", coordinates: [19.4326, -99.1332] },
+            { city: "Toronto", coordinates: [43.651070, -79.347015] },
+            { city: "Vancouver", coordinates: [49.2827, -123.1207] },
+            { city: "Alaska", coordinates: [64.2008, -149.4937] },
+            { city: "Montreal", coordinates: [45.5017, -73.5673] },
+            { city: "Banff", coordinates: [51.1784, -115.5708] },
+
+            // Russia
+            { city: "Moscow", coordinates: [55.7558, 37.6173] },
+            { city: "Saint Petersburg", coordinates: [59.9343, 30.3351] },
+            { city: "Vladivostok", coordinates: [43.1195, 131.8869] },
+            { city: "Yakutsk", coordinates: [62.0355, 129.6757] },
+            { city: "Siberia", coordinates: [60.0000, 100.0000] },
+
+            // Africa
+            { city: "Cairo", coordinates: [30.0444, 31.2357] },
+            { city: "Lagos", coordinates: [6.5244, 3.3792] },
+            { city: "Cape Town", coordinates: [-33.9249, 18.4241] },
+            { city: "Johannesburg", coordinates: [-26.2041, 28.0473] },
+            { city: "Nairobi", coordinates: [-1.2867, 36.8219] },
+            { city: "Addis Ababa", coordinates: [9.145, 40.4897] },
+            { city: "Marrakech", coordinates: [31.6349, -7.9995] },
+            { city: "Tunis", coordinates: [36.8065, 10.1815] },
+            { city: "Zanzibar", coordinates: [-6.1659, 39.2026] },
+            { city: "Dakar", coordinates: [14.6928, -17.4467] },
+
+            // Canada / Alaska
+            { city: "Whitehorse", coordinates: [60.7212, -135.0568] },
+            { city: "Edmonton", coordinates: [53.5461, -113.4938] },
+            { city: "Yellowknife", coordinates: [62.4540, -114.3718] },
+            { city: "Iqaluit", coordinates: [63.7467, -68.5167] },
+            { city: "Anchorage", coordinates: [61.2181, -149.9003] },
+            { city: "Fairbanks", coordinates: [64.8378, -147.7164] },
+            { city: "Vancouver", coordinates: [49.2827, -123.1207] },
+            { city: "Ottawa", coordinates: [45.4215, -75.6972] }
+        ];
+
+        // Track displayed cities to avoid duplicates
+        const addedCities = new Set();
+        let popupCount = 0; // To count how many popups have been displayed
+        let latestPopup = null; // To store the latest popup
+
+        // Function to add a point with a random phrase and random city
+        function addRandomPoint() {
+            let randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+            let randomLocation = locations[Math.floor(Math.random() * locations.length)];
+
+            // Add marker with a visible popup
+            const marker = L.marker(randomLocation.coordinates).addTo(map);
+
+            // Default popup class (normal style)
+            let popupClass = '';
+
+            // Add a custom popup showing the phrase and city
+            const popupContent = `${randomPhrase}<br><strong>${randomLocation.city}</strong>`;
+            const popup = L.popup({ closeButton: false, autoClose: false, zIndex: 1000 })
+                .setLatLng(randomLocation.coordinates)
+                .setContent(`<div class="custom-popup ${popupClass}">${popupContent}</div>`)
+                .addTo(map);
+
+            popupCount++;
+
+            // If it's the most recent popup, highlight it
+            if (popupCount > 1) {
+                // Remove the highlight from the previous popup
+                latestPopup._contentNode.classList.remove("highlighted-popup");
+            }
+
+            // Highlight the current popup
+            setTimeout(() => {
+                popup._contentNode.classList.add("highlighted-popup");
+            }, 0); // Apply immediately on popup appearance
+
+            // Store the latest popup
+            latestPopup = popup;
+
+            // After 10 popups, center the view to show the whole world
+            if (popupCount >= 10) {
+                map.setView([20, 0], 2, { animate: true, duration: 2 }); // Center the map at world level
+                map.dragging.disable(); // Disable dragging
+                map.scrollWheelZoom.disable(); // Disable zooming
+
+                // Optional: stop further popups after 10 popups
+                // clearInterval(addPopupInterval); // If you want to stop adding points after 10 popups
+            } else {
+                // Otherwise, continue with normal centering
+                map.setView(randomLocation.coordinates, 3, { animate: true, duration: 2 });
+            }
+        }
+
+        // Add a new point every 10 seconds
+        const addPopupInterval = setInterval(addRandomPoint, 1000);
+    </script>
+</body>
+</html>
