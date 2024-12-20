@@ -1,0 +1,43 @@
+body {
+    background-color: blue;
+}
+
+.Table1 {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    background-color: white;
+    width: 50%;
+    font-family: Arial;
+}
+
+.Table2 {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: lightblue;
+}
+
+.final {
+    margin-top: 30px;
+}
+
+.pLong {
+    width: 300px;
+}
+
+.pFinal {
+    width: 600px;
+}
+
+button {
+    width: 60px;
+}
+
+img {
+    border-radius: 5px;
+}
+
+td {
+    margin-top: 15px;
+}

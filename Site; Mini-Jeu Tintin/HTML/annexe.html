@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../CSS/style.css">
+    <title>Explications</title>
+</head>
+<body>
+<table align="center" class="Table1"><tr><td>
+    <table align="center" class="Table2">
+        <tr><td align="center" colspan="2"><h1>Explications du mini-jeu</h1></td></tr>
+        
+        <tr><td><p>Cette page vise à expliquer de façon simple le mini jeu précédent.</p></td></tr>
+    </table>
+
+    <table align="center" class="Table2">
+        <tr><td align="center" colspan="2"><h3>Partie 1 : l'image animée qui bouge</h3></td></tr>
+        
+        <tr><td colspan="2"><p>Voici comment j'ai fait pour mettre une image de Tintin qui bouge de gauche à droite :</p></td></tr>
+
+        <tr>
+            <td valign="top"><img src="../IMG/screen.png"></td>
+            <td valign="top"><p class="pLong">Dans cette capture d'écran on peut voir la balise "marquee"
+                   qui sers a ce que tout ce que l'on mette dedans, bouge dans
+                   la direction qu'on veut, à l'infini. On peut le voir avec
+                   le paramètre "direction=right" qui indique de faire bouger
+                   les éléments de gauche à droite. Ensuite le paramètre 
+                   "scrollamount" permet de varier la vitesse de déplacement 
+                   des éléments, et enfin dans cette balise on vient mettre
+                   notre élément à faire bouger, ici une image, pour que le
+                   joueur puisse avoir l'illusion qu'il joue à repérer les 
+                   Tintins qui bougent.</p></td>
+        </tr>
+    </table>
+
+    <table align="center" class="Table2">
+        <tr><td align="center" colspan="2"><h3>Partie 2 : le compteur qui s'incrémente</h3></td></tr>
+        
+        <tr><td colspan="2" align="center"><p>Voici comment j'ai fait pour faire un nombre qui grandit quand on clique sur un bouton :</p></td></tr>
+
+        <tr>
+            <td valign="top"><p>J'ai commencer par relier un fichier javascript à ma page</p></td>
+            <td><img src="../IMG/screen1.png"></td>
+        </tr>
+
+        <tr>
+            <td valign="top"><p class="pLong">J'ai ensuite rajouté un bouton avec en paramètre :
+                                 une fonction (qui sera défini plus tard) sur ma page.</p></td>
+            <td><img src="../IMG/screen2.png"></td>
+        </tr>
+
+        <tr>
+            <td valign="top"><p class="pLong">J'ai ensuite rajouté un paragraphe avec un id : "compteur"
+                                 , qui permettra de retrouver ce paragraphe plus tard pour
+                                 changer sa valeur.</p></td>
+            <td><img src="../IMG/screen3.png"></td>
+        </tr>
+        
+        <tr><td colspan="2" align="center"><p>Maintenant du côté du fichier javascript :</p></td></tr>
+
+        <tr>
+            <td><img src="../IMG/screen4.png"></td>
+            <td valign="top"><p class="pLong">Dans la première ligne du fichier j'ai mis une variable : "total"
+                                              qui va augmenter au fur et à mesure que le joueur va cliquer sur le
+                                              bouton.</p></td>
+        </tr>
+
+        <tr>
+            <td><img src="../IMG/screen5.png"></td>
+            <td valign="top"><p class="pLong">Enfin on a la fonction : "Compteur", qui va avoir comme role 
+                                              d'augmenter de 1 la variable (c'est le rôle du "++"), et ensuite
+                                              ça va redéfinir le texte qui se trouve dans le paragraphe avec
+                                              l'id "compteur", par le chiffre total de click.
+            </p></td>
+        </tr>
+
+    </table>
+
+    <table align="center" class="Table2 final">
+        <tr><td align="center"><h1>Conclusion :</h1></td></tr>
+        
+        <tr><td><p class="pFinal">J'ai des éléments simples de HTML et Javascript, pour donner un mini-jeu très basique et correct.
+                                Néanmoins, le jeu est plus une illusion qu'autre chose, il ne se passe rien et on ne clique pas et le
+                                jeu ne sauvegarde pas la progression du joueur, ce qui aurait pris beaucoup plus de temps à implémenter
+                                et à faire marcher ensemble. Je remercie le site w3schools qui m'a permis d'en apprendre plus sur le
+                                HTML et le Javascript, et je vais mettre une liste de pages qui m'ont aidé à la réalisation de ce site.
+        </p></td></tr>
+
+        <tr><td>
+            <ol>
+                <li><a href="https://www.w3schools.in/html/marquee-tag" target="_blank">Balise "marquee"</a></li>
+                <li><a href="https://www.w3schools.in/html/button-tag" target="_blank">Balise "bouton"</a></li>
+                <li><a href="https://www.w3schools.com/html/html_lists.asp" target="_blank">Balises "liste"</a></li>
+                <li><a href="https://www.w3schools.com/js/js_functions.asp" target="_blank">Fontions Javascript</a></li>
+            </ol>
+        </td></tr>
+
+        <tr><td align="center"><p><a href="index.html">>>> Retour au mini-jeu Tintin <<<</a></p></td></tr>
+
+    </table>
+</td></tr></table>
+<script src="../JS/script.js"></script>
+</body>
+</html>

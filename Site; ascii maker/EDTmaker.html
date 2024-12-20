@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Hebdomadaire</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Agenda Hebdomadaire</h1>
+        <div class="profile-section">
+            <label for="profile-select">Profil:</label>
+            <select id="profile-select"></select>
+            <button id="new-profile-button">Nouveau Profil</button>
+            <button id="delete-profile-button">Supprimer Profil</button>
+        </div>
+        <div class="calendar">
+            <div class="day" data-day="Lundi">Lundi</div>
+            <div class="day" data-day="Mardi">Mardi</div>
+            <div class="day" data-day="Mercredi">Mercredi</div>
+            <div class="day" data-day="Jeudi">Jeudi</div>
+            <div class="day" data-day="Vendredi">Vendredi</div>
+            <div class="day" data-day="Samedi">Samedi</div>
+            <div class="day" data-day="Dimanche">Dimanche</div>
+        </div>
+    </div>
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-button" id="close-button">&times;</span>
+            <h2 id="modal-title">Ajouter un événement</h2>
+            <form id="event-form">
+                <label for="event-title">Titre de l'événement:</label>
+                <input type="text" id="event-title" required>
+                <label for="event-start-time">Heure de début:</label>
+                <input type="time" id="event-start-time" required>
+                <label for="event-end-time">Heure de fin:</label>
+                <input type="time" id="event-end-time" required>
+                <button type="submit" id="submit-button">Ajouter</button>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
