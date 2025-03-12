@@ -18,8 +18,13 @@ u {
     font-size: 100px;
 }
 
+p {
+    font-size: 70px;
+    margin-bottom: -20px;
+}
+
 .video {
-    margin-top: 200px;
+    margin-top: 130px;
 }
 
 a {
