@@ -1,0 +1,74 @@
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+header {
+    background-color: crimson;
+    display: flex;
+    padding-left: 20%;
+}
+
+header a {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: black;
+    float: left;
+    font-size: 30px;
+    padding-right: 30px;
+    padding-left: 10px;
+}
+
+header a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    margin-top: 150px;
+    display: flex;
+    background-color: crimson;
+    padding-left: 20%;
+}
+
+.main {
+    text-align: center;
+}
+
+.main h1 {
+    font-size: 50px;
+    text-decoration: underline;
+}
+
+.main img {
+    margin-top: -10px;
+}
+
+.note {
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    display: flex;
+    background-color: yellow;
+    background-image: url("img/pattern_post-it.png");
+    background-size: 30px 14px;
+    width: 300px;
+    text-align: center;
+    border-bottom-right-radius: 10px;
+    box-shadow: 5px 10px 10px grey;
+}
+.note p {
+    margin-left: -35px;
+}
+
+.reseaux blockquote {
+    padding-bottom: 40px;
+}
+
+.projet img {
+    margin-top: 13px;
+    border: 3px solid black;
+    width: 300px;
+    height: 300px;
+}
