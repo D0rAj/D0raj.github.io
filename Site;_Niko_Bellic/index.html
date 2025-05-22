@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niko Bellic's American Dream</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.cdnfonts.com/css/pricedown" rel="stylesheet">
+    <style>
+        @import url('https://d0raj.github.io/pricedown.ttf');
+        
+        .pricedown {
+            font-family: 'Pricedown', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        
+        .gta-button {
+            background: linear-gradient(to bottom, #444444, #222222);
+            border: 2px solid #555555;
+            border-radius: 5px;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .gta-button:hover {
+            background: linear-gradient(to bottom, #555555, #333333);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .gta-card {
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid #444;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+        }
+        
+        .niko-image {
+            border: 3px solid #555;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+        }
+        
+        .ending-card {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid orange;
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: .15em;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: orange; }
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 640px) {
+            .pricedown {
+                font-size: 2.5rem;
+            }
+            .gta-button {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+            #game-container {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-20">
+    <div class="container mx-auto px-4 max-w-3xl">
+        <!-- Header -->
+        <header class="text-center py-6">
+            <h1 class="pricedown text-4xl md:text-5xl text-yellow-400 mb-2">NIKO BELLIC</h1>
+            <p class="text-gray-400 italic">The American Dream - Your Choices Matter</p>
+        </header>
+        
+        <!-- Introduction -->
+        <section id="intro" class="gta-card p-6 mb-8">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                <img src="https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/36c7442c-aed5-4e9a-86ec-0a59dd4c5a37/debiczc-4c0ced0c-45b2-4d8d-8d98-c88ca31aa9d4.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzM2Yzc0NDJjLWFlZDUtNGU5YS04NmVjLTBhNTlkZDRjNWEzN1wvZGViaWN6Yy00YzBjZWQwYy00NWIyLTRkOGQtOGQ5OC1jODhjYTMxYWE5ZDQucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.jcq7gKdwGE0_hBsNYzZAB24wZMOciyT_QJMl5F12sU8" alt="Niko Bellic" class="niko-image w-full md:w-1/3 rounded-lg">
+                <div>
+                    <h2 class="pricedown text-2xl text-yellow-400 mb-3">WELCOME TO LIBERTY CITY</h2>
+                    <p class="mb-4">After escaping the war in Eastern Europe, you arrive in Liberty City seeking fortune and a new life. Your cousin Roman promised you the American dream... but things are never that simple.</p>
+                    <p class="text-gray-400 italic">Make choices that will determine your path - will you find legitimate success, criminal glory, or something completely unexpected?</p>
+                    <button onclick="startGame()" class="gta-button mt-4 py-2 px-4 w-full">START YOUR JOURNEY</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Game Content -->
+        <section id="game-content" class="hidden">
+            <div id="question-container" class="gta-card p-6 mb-6">
+                <p id="question-text" class="text-xl mb-4"></p>
+                <div id="options-container" class="grid gap-3"></div>
+            </div>
+            
+            <div id="result-container" class="ending-card gta-card p-6 mb-6">
+                <h3 id="result-title" class="pricedown text-2xl mb-4"></h3>
+                <img id="result-image" src="" alt="" class="w-full rounded-lg mb-4">
+                <p id="result-text" class="mb-4"></p>
+                <p id="result-quote" class="italic"></p>
+                <button onclick="restartGame()" class="gta-button mt-4 py-2 px-4 w-full">PLAY AGAIN</button>
+            </div>
+        </section>
+        
+        <footer class="text-center mt-8 text-gray-400 text-sm">
+            <p>© 2025 Jarod and Amine </p>
+        </footer>
+    </div>
+
+    <script>
+        // Game state
+        let currentQuestion = 1;
+        const questions = {
+            1: {
+                text: "Roman picks you up from the boat in his taxi. He's excited to show you around Liberty City and offers you a job driving cabs. What do you do?",
+                options: [
+                    { text: "Accept the job gratefully", next: 2 },
+                    { text: "Laugh in his face and tell him taxis are for losers", next: 5 },
+                    { text: "Ask about other opportunities", next: 3 },
+                    { text: "Take the wheel and show him how to really drive", next: 4 }
+                ]
+            },
+            2: {
+                text: "You start driving cabs but the pay is terrible. One night, a drunk passenger offers you $500 to drive recklessly. Do you:",
+                options: [
+                    { text: "Accept and give him the craziest ride of his life", next: "legal_good" },
+                    { text: "Refuse and kick him out", next: "legal_bad" },
+                    { text: "Take his money then rob him when he passes out", next: "illegal_good" },
+                    { text: "Drive him to a secluded area to mug him", next: "illegal_bad" }
+                ]
+            },
+            3: {
+                text: "Roman mentions his friend Vlad who runs a 'business'. He could introduce you. Do you:",
+                options: [
+                    { text: "Meet Vlad and hear his offer", next: 7 },
+                    { text: "Tell Roman you'll find your own way", next: 8 },
+                    { text: "Ask about legal job opportunities", next: "legal_good" },
+                    { text: "Threaten Vlad to take over his operation", next: "illegal_bad" }
+                ]
+            },
+            4: {
+                text: "Your driving impresses Roman. He suggests starting a premium taxi service. Meanwhile, you notice illegal street races happening. Do you:",
+                options: [
+                    { text: "Focus on building the legitimate business", next: "legal_good" },
+                    { text: "Join the races for quick cash", next: "illegal_good" },
+                    { text: "Sabotage competitors' cabs", next: "legal_bad" },
+                    { text: "Use the taxi to scout for robbery targets", next: "illegal_bad" }
+                ]
+            },
+            5: {
+                text: "Roman is hurt but understands. You need money fast. How will you get it?",
+                options: [
+                    { text: "Hijack an armored truck with heavy weapons", next: 9 },
+                    { text: "Find underground fighting rings", next: 10 },
+                    { text: "Apply for construction jobs", next: "legal_bad" },
+                    { text: "Use your war skills for private security", next: "legal_good" }
+                ]
+            },
+            6: {
+                text: "The drunk passenger turns out to be a powerful businessman. He respects your principles and offers you a security job. Do you:",
+                options: [
+                    { text: "Accept and leave Roman's cab company", next: "legal_good" },
+                    { text: "Stay loyal to Roman", next: 2 },
+                    { text: "Use the job to case his business for robbery", next: "illegal_bad" },
+                    { text: "Blackmail him for more money", next: "illegal_good" }
+                ]
+            },
+            7: {
+                text: "Vlad turns out to be a loan shark. He offers you work collecting debts. First assignment: a single mom behind on payments. Do you:",
+                options: [
+                    { text: "Take the money forcefully", next: 11 },
+                    { text: "Pay her debt yourself", next: 12 },
+                    { text: "Convince Vlad to give her more time", next: "legal_good" },
+                    { text: "Take her car as collateral to sell", next: "illegal_bad" }
+                ]
+            },
+            8: {
+                text: "You wander the streets looking for work. You see an opportunity to steal a parked sports car. Do you:",
+                options: [
+                    { text: "Steal it and sell it to a chop shop", next: "illegal_good" },
+                    { text: "Leave it and keep looking", next: 3 },
+                    { text: "Wait for the owner to extort him", next: "illegal_bad" },
+                    { text: "Leave a note offering your services as driver", next: "legal_bad" }
+                ]
+            },
+            9: {
+                text: "The heist goes wrong when the truck's GPS tracker alerts police. You escape but now have heat. Meanwhile, you discover Football Manager on Roman's computer. Do you:",
+                options: [
+                    { text: "Lay low and plan the next score", next: "illegal_good" },
+                    { text: "Ignore it while analyzing sports statistics", next: 13 },
+                    { text: "Turn yourself in to avoid worse trouble", next: "legal_bad" },
+                    { text: "Use your cut to bribe the cops", next: "illegal_bad" }
+                ]
+            },
+            10: {
+                text: "You dominate the underground fights. A promoter offers you a pro MMA contract. Do you:",
+                options: [
+                    { text: "Accept and go legit", next: "legal_good" },
+                    { text: "Keep fighting underground for bigger cash prizes", next: "illegal_good" },
+                    { text: "Fix fights for gambling profits", next: "illegal_bad" },
+                    { text: "Use your rep to start a gym business", next: "legal_bad" }
+                ]
+            },
+            11: {
+                text: "She curses you as you leave. Later, her brother (a cop) arrests you. In jail, inmates respect your rep. Do you:",
+                options: [
+                    { text: "Run the prison gang", next: "illegal_good" },
+                    { text: "Snitch to get reduced sentence", next: "legal_bad" },
+                    { text: "Study law to appeal your case", next: "legal_good" },
+                    { text: "Start a riot to escape", next: "illegal_bad" }
+                ]
+            },
+            12: {
+                text: "Vlad is amused by your softness but respects the money. He offers you more 'ethical' work. Do you:",
+                options: [
+                    { text: "Accept his new offer", next: "legal_good" },
+                    { text: "Start your own business with Roman", next: "legal_bad" },
+                    { text: "Take over his operation by force", next: "illegal_good" },
+                    { text: "Blackmail him with his criminal records", next: "illegal_bad" }
+                ]
+            },
+            13: {
+                text: "You spend days analyzing stats. Roman complains you're wasting time. Then you discover sports betting. Do you:",
+                options: [
+                    { text: "Start gambling with your heist money", next: "legal_bad" },
+                    { text: "Start collecting more, ignoring everything else", next: 17 },
+                    { text: "Use your knowledge to become a bookie", next: "illegal_good" },
+                    { text: "Get a job as a sports analyst", next: "legal_good" }
+                ]
+            },
+            17: {
+                text: "Your sports memorabilia collection grows enormous. Roman and friends worry about your obsession. Do you:",
+                options: [
+                    { text: "Let them handle it while you focus on sports", next: "secret" },
+                    { text: "Sell some pieces to help Roman's business", next: "legal_good" },
+                    { text: "Steal rare items to complete your collection", next: "illegal_bad" },
+                    { text: "Open a legitimate sports memorabilia shop", next: "legal_bad" }
+                ]
+            }
+        };
+
+        const endings = {
+            "legal_good": {
+                title: "LEGAL GOOD ENDING: REDEMPTION",
+                text: "Through hard work and integrity, you build a legitimate business empire in Liberty City. While not as flashy as criminal wealth, you sleep well at night. Roman remains your loyal partner, though he still complains about taxes and regulations.",
+                image: "https://preview.redd.it/how-would-you-describe-niko-as-a-main-character-and-v0-53k7ucmwivob1.jpg?width=640&crop=smart&auto=webp&s=9568fa97dffef2ab38e53dac67261886e225c211",
+                quote: "\"America gave me a second chance. I wasn't going to waste it.\"",
+                color: "text-green-400"
+            },
+            "legal_bad": {
+                title: "LEGAL BAD ENDING: BROKEN DREAM",
+                text: "You stay on the straight and narrow, but cut corners wherever possible. Your business succeeds but leaves you unfulfilled. Roman grows distant as your relationship becomes purely professional. The American dream wasn't what you expected.",
+                image: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/1cd02b7c-6f92-4b39-b4cc-81de1433ac05/d4f1fwt-ffb583b7-f5d9-42a2-a591-7b1c61e23583.jpg/v1/fill/w_900,h_405,q_75,strp/niko_bellic_in_gta_5_by_zeziesc_d4f1fwt-fullview.jpg?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7ImhlaWdodCI6Ijw9NDA1IiwicGF0aCI6IlwvZlwvMWNkMDJiN2MtNmY5Mi00YjM5LWI0Y2MtODFkZTE0MzNhYzA1XC9kNGYxZnd0LWZmYjU4M2I3LWY1ZDktNDJhMi1hNTkxLTdiMWM2MWUyMzU4My5qcGciLCJ3aWR0aCI6Ijw9OTAwIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmltYWdlLm9wZXJhdGlvbnMiXX0.apHHb0gBSEbvJrc9iVamKSVku8MfsUFS4XGk0bg4jGI",
+                quote: "\"This was supposed to be the land of opportunity...\"",
+                color: "text-yellow-400"
+            },
+            "illegal_good": {
+                title: "ILLEGAL GOOD ENDING: CRIMINAL WITH HONOR",
+                text: "You build a criminal empire with a code of honor, protecting the weak while exploiting the corrupt. The police can't touch you, and the streets respect you. Roman lives comfortably in a penthouse you bought him, though he worries constantly.",
+                image: "https://cdn3.whatculture.com/images/2016/12/c73e19dd56b80342-600x338.jpg",
+                quote: "\"There are no clean hands in this city. But mine are cleaner than most.\"",
+                color: "text-blue-400"
+            },
+            "illegal_bad": {
+                title: "ILLEGAL BAD ENDING: NO WAY OUT",
+                text: "Your rise in the underworld leaves bodies in your wake. You have money, power, and fear - but no real friends. Even Roman cuts ties when you go too far. One rainy night in Algonquin, your reign ends as violently as it began.",
+                image: "https://i.pinimg.com/736x/95/36/a8/9536a8abc66fc1c5d6c95a0ca152239c.jpg",
+                quote: "\"War... war never changes.\"",
+                color: "text-red-400"
+            },
+            "secret": {
+                title: "SECRET ENDING: FOOTBALL MANAGER ADDICTION",
+                text: "Your sports obsession reaches its peak when you abandon all criminal activities to play Football Manager 24/7. Roman finds you months later in a trance, surrounded by empty energy drink cans and notebooks full of tactical diagrams. You've created the perfect 4-4-2 formation but lost touch with reality. Roman sighs and brings you another energy drink.",
+                image: "https://images-wixmp-ed30a86b8c4ca887773594c2.wixmp.com/f/36c7442c-aed5-4e9a-86ec-0a59dd4c5a37/debiczc-4c0ced0c-45b2-4d8d-8d98-c88ca31aa9d4.png?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1cm46YXBwOjdlMGQxODg5ODIyNjQzNzNhNWYwZDQxNWVhMGQyNmUwIiwiaXNzIjoidXJuOmFwcDo3ZTBkMTg4OTgyMjY0MzczYTVmMGQ0MTVlYTBkMjZlMCIsIm9iaiI6W1t7InBhdGgiOiJcL2ZcLzM2Yzc0NDJjLWFlZDUtNGU5YS04NmVjLTBhNTlkZDRjNWEzN1wvZGViaWN6Yy00YzBjZWQwYy00NWIyLTRkOGQtOGQ5OC1jODhjYTMxYWE5ZDQucG5nIn1dXSwiYXVkIjpbInVybjpzZXJ2aWNlOmZpbGUuZG93bmxvYWQiXX0.jcq7gKdwGE0_hBsNYzZAB24wZMOciyT_QJMl5F12sU8",
+                quote: "\"Just one more match... I can stop anytime I want...\"",
+                color: "text-purple-400"
+            }
+        };
+
+        // Game functions
+        function startGame() {
+            document.getElementById('intro').classList.add('hidden');
+            document.getElementById('game-content').classList.remove('hidden');
+            showQuestion(currentQuestion);
+        }
+
+        function showQuestion(questionId) {
+            const question = questions[questionId];
+            const questionText = document.getElementById('question-text');
+            const optionsContainer = document.getElementById('options-container');
+            
+            questionText.textContent = question.text;
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.textContent = option.text;
+                button.classList.add('gta-button', 'py-3', 'px-4', 'text-left');
+                button.onclick = () => selectOption(option.next);
+                optionsContainer.appendChild(button);
+            });
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function selectOption(nextQuestion) {
+            if (typeof nextQuestion === 'number') {
+                currentQuestion = nextQuestion;
+                showQuestion(currentQuestion);
+            } else {
+                showEnding(nextQuestion);
+            }
+        }
+
+        function showEnding(endingId) {
+            const ending = endings[endingId];
+            const questionContainer = document.getElementById('question-container');
+            const resultContainer = document.getElementById('result-container');
+            
+            questionContainer.classList.add('hidden');
+            resultContainer.style.display = 'block';
+            
+            document.getElementById('result-title').textContent = ending.title;
+            document.getElementById('result-title').className = `pricedown text-2xl mb-4 ${ending.color}`;
+            document.getElementById('result-text').textContent = ending.text;
+            document.getElementById('result-image').src = ending.image;
+            document.getElementById('result-quote').textContent = ending.quote;
+            document.getElementById('result-quote').className = `italic ${ending.color}`;
+            
+            // Special animation for secret ending
+            if (endingId === 'secret') {
+                document.getElementById('result-title').classList.add('typewriter');
+                setTimeout(() => {
+                    document.getElementById('result-title').classList.remove('typewriter');
+                }, 3500);
+            }
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function restartGame() {
+            currentQuestion = 1;
+            document.getElementById('result-container').style.display = 'none';
+            document.getElementById('question-container').classList.remove('hidden');
+            showQuestion(currentQuestion);
+        }
+    </script>
+</body>
+</html>
